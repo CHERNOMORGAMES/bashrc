@@ -1,2 +1,0 @@
-# bashrc
-Bash alias collection
