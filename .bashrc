@@ -99,12 +99,19 @@ alias phplocall='command php -S 0.0.0.0:8000'
 
 srch()
 {
-	if [ -z "$2" ]; then
-		command find -iname "$1"
-	else
-		echo Depth="$2"
-		command find -maxdepth "$2" -iname "$1"
+	local DPT=$2
+	if [ -z "$DPT" ]; then
+		DPT=1
 	fi
+	local RPL
+	until [[ $RPL =~ ^[Nn]$ ]]
+	do
+		echo Level "$DPT"
+		command find -mindepth "$DPT" -maxdepth "$DPT" -iname "$1"
+		read -rsp "Go deeper?(y/n) " -n 1 RPL
+		DPT=$((DPT + 1))
+	done
+	echo
 }
 alias search='srch'
 chck()
