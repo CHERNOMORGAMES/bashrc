@@ -4,6 +4,8 @@
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
 
+alias iam='command echo I am: "$0" - with "$#" arguments: "$@"'
+
 alias ls='command ls -At --group-directories-first --color="always"'
 alias lsf='command ls -At --full-time --group-directories-first --color="always"'
 alias list='command ls'
@@ -75,7 +77,6 @@ show()
 	type -a "$@"
 	whereis "$@"
 }
-alias iam='command echo I am: "$0" - with "$#" arguments: "$@"'
 
 alias mpass='openssl rand -base64 15'
 alias mpass16='openssl rand -base64 12'
