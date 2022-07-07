@@ -1,29 +1,36 @@
-#Bash alias collection by CHERNOMOR
+#Bash alias collection by CHERNOMOR (tested GNU bash, version 5.1.0(1)-release (x86_64-redhat-linux-gnu))
 #Append this to the end of ~/.bashrc or ~/.bash_aliases file (in your $HOME directory)
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
+#prefix 'command' works like 'not an alias' - it also works a bit faster.
 
-alias ls='ls -At --group-directories-first --color="always"'
+alias ls='command ls -At --group-directories-first --color="always"'
+alias lsf='command ls -At --full-time --group-directories-first --color="always"'
+alias list='command ls'
+
+alias h='command history'
+alias cl='command clear'
+
 cdls()
 {
-	builtin cd "$*"
+	builtin cd "$@"
 	local RES=$?
 	if [ "$RES" -eq 0 ]; then
 		ls
 	fi
 }
 alias cd='cdls'
-alias cl='clear'
-alias cld='clear && cd'
+alias cld='command clear; cd'
 alias home='cld $HOME'
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+
 rmls()
 {
-	rm -rI "$*"
+	command rm -rIv "$@"
 	local RES=$?
 	if [ "$RES" -eq 0 ]; then
 		ls
@@ -31,25 +38,45 @@ rmls()
 }
 alias del='rmls'
 alias delete='del'
+
 mkls()
 {
-	mkdir "$*"
+	command mkdir -v "$@"
 	local RES=$?
 	if [ "$RES" -eq 0 ]; then
 		ls
 	fi
 }
 alias mk='mkls'
-alias cr='touch'
-alias create='cr'
-alias cp='cp -iv'
-alias copy='rsync -ah --info=progress2'
-alias mv='mv -iv'
-alias h='history'
-alias path='echo -e ${PATH//:/\\n}'
-alias now='date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
-alias open='xdg-open'
-alias calc='bc -l'
+mkcd()
+{
+	command mkdir -v "$@"
+	local RES=$?
+	if [ "$RES" -eq 0 ]; then
+		cd "${@: -1}"
+	fi
+}
+
+alias empty='command touch'
+alias create='command cat>'
+alias cr='create'
+alias edit='command nano'
+
+alias cp='command cp -iv'
+alias copy='command rsync -ah --info=progress2'
+alias mv='command mv -iv'
+
+alias path='command echo -e ${PATH//:/\\n}'
+alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
+alias open='command xdg-open'
+alias calc='command bc -l'
+show()
+{
+	type -a "$@"
+	whereis "$@"
+}
+alias iam='command echo I am: "$0" - with "$#" arguments: "$@"'
+
 alias mpass='openssl rand -base64 15'
 alias mpass16='openssl rand -base64 12'
 alias mpass20='mpass'
@@ -57,18 +84,35 @@ alias mpass128='openssl rand -base64 18'
 alias mpass24='mpass128'
 alias mpass256='openssl rand -base64 33'
 alias mpass44='mpass256'
-alias disk='df -hT --total --no-sync'
-alias ports='netstat -tulap'
-alias iports='netstat -tulanp'
-alias ipublic='curl ipinfo.io/ip'
-alias ram='free -hlt'
-alias cpu='lscpu'
+
+alias disk='command df -hT --total --no-sync'
+alias ram='command free -hlt'
+alias cpu='command lscpu'
+
+alias ports='command netstat -tulap'
+alias iports='command netstat -tulanp'
+alias ipublic='command curl ipinfo.io/ip'
+
+alias phplocal='command php -S 127.0.0.1:8000'
+alias phplocall='command php -S 0.0.0.0:8000'
+
 srch()
 {
-	grep -ril "$*" | xargs ls -t --full-time
+	if [ -z "$2" ]; then
+		command find -iname "$1"
+	else
+		echo Depth="$2"
+		command find -maxdepth "$2" -iname "$1"
+	fi
 }
 alias search='srch'
-alias match='grep -nori --color="always"'
+chck()
+{
+	command grep -ilr "$@" | command xargs ls -t --full-time
+}
+alias check='chck'
+alias match='command grep -inor --color="always"'
+
 #PHP virus code (Hector shell) search (need more testing)
 alias phps1='grep -ril --include=*.php -e "'base'.(128/2).'_de'.'code'" -e "(128/2)" | xargs ls -t --full-time'
 alias phps2='grep -ril --include=*.php -e "'base'.(128/2).'_de'.'code'" -e "(128/2)" -e "base64_decode" | xargs ls -t --full-time'
@@ -87,4 +131,3 @@ alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias firewall=iptlist
 #
-alias phplocal='php -S 127.0.0.1:8000'
