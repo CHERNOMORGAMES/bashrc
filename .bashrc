@@ -1,8 +1,8 @@
 #Bash alias collection by CHERNOMOR
 #(tested on GNU bash, version 5.1.0(1)-release (x86_64-redhat-linux-gnu) and version 5.1.16(1)-release (x86_64-pc-linux-gnu))
 #Append this to the end of ~/.bashrc or ~/.bash_aliases file in your $HOME directory
-#Or to the end of /etc/bash.bashrc file to make it global
-#Or to the end of /root/.bashrc to make it work after 'sudo -i'
+#Or to the end of /etc/bash.bashrc file to make it global - all users except root
+#Or to the end of /root/.bashrc to make it work for root user (after 'sudo -i')
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
