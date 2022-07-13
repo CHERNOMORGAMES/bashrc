@@ -1,16 +1,33 @@
-#Bash alias collection by CHERNOMOR (tested GNU bash, version 5.1.0(1)-release (x86_64-redhat-linux-gnu))
-#Append this to the end of ~/.bashrc or ~/.bash_aliases file (in your $HOME directory)
+#Bash alias collection by CHERNOMOR
+#(tested on GNU bash, version 5.1.0(1)-release (x86_64-redhat-linux-gnu) and version 5.1.16(1)-release (x86_64-pc-linux-gnu))
+#Append this to the end of ~/.bashrc or ~/.bash_aliases file in your $HOME directory
+#Or to the end of /etc/bash.bashrc file to make it global
+#Or to the end of /root/.bashrc to make it work after 'sudo -i'
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
 
-alias iam='command echo I am: "$0" - with "$#" arguments: "$@"'
+execsudo()
+{
+	if [[ "$1" = "-"* ]]; then
+	sudo "$@"
+	elif [ "$(type -t $1)" = "function" ]; then
+	local ARGS="$@"; sudo bash -c "$(declare -f $1); $ARGS"
+	elif [ "$1" = "command" ] || [ "$1" = "builtin" ]; then
+	shift; sudo bash -i <<<"$@"
+	else
+	sudo bash -i <<<"$@"
+	fi
+}
+alias sudo="execsudo "
 
-alias ls='command ls -At --group-directories-first --color="always"'
-alias lsf='command ls -At --full-time --group-directories-first --color="always"'
+alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
+
+alias ls='ls -AtF --group-directories-first --color="always"'
+alias lsf='ls -h --full-time'
 alias list='command ls'
 
-alias h='command history'
+alias h='builtin history'
 alias cl='command clear'
 
 cdls()
@@ -29,6 +46,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias back='cd -'
 
 rmls()
 {
@@ -63,20 +81,22 @@ alias empty='command touch'
 alias create='command cat>'
 alias cr='create'
 alias edit='command nano'
+alias reader='command vi'
 
 alias cp='command cp -iv'
 alias copy='command rsync -ah --info=progress2'
 alias mv='command mv -iv'
 
-alias path='command echo -e ${PATH//:/\\n}'
+alias path='builtin echo -e ${PATH//:/\\n}'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
 alias open='command xdg-open'
 alias calc='command bc -l'
 show()
 {
-	type -a "$@"
-	whereis "$@"
+	builtin type -a "$@"
+	command whereis "$@"
 }
+alias showme='show'
 
 alias mpass='openssl rand -base64 15'
 alias mpass16='openssl rand -base64 12'
@@ -86,9 +106,11 @@ alias mpass24='mpass128'
 alias mpass256='openssl rand -base64 33'
 alias mpass44='mpass256'
 
-alias disk='command df -hT --total --no-sync'
 alias ram='command free -hlt'
 alias cpu='command lscpu'
+alias disk='command df -hT --total --no-sync'
+alias dvcs='command lsblk -p'
+alias devices='dvcs'
 
 alias ports='command netstat -tulap'
 alias iports='command netstat -tulanp'
@@ -106,9 +128,9 @@ srch()
 	local RPL
 	until [[ $RPL =~ ^[Nn]$ ]]
 	do
-		echo Level "$DPT"
+		builtin echo Level "$DPT"
 		command find -mindepth "$DPT" -maxdepth "$DPT" -iname "$1"
-		read -rsp "Go deeper?(y/n) " -n 1 RPL
+		builtin read -rsp "Go deeper?(y/n) " -n 1 RPL
 		DPT=$((DPT + 1))
 	done
 	echo
