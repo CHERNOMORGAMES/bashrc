@@ -6,6 +6,7 @@
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
+alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
 
 execsudo()
 {
@@ -20,8 +21,6 @@ execsudo()
 	fi
 }
 alias sudo="execsudo "
-
-alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
 
 alias ls='ls -AtF --group-directories-first --color="always"'
 alias lsf='ls -h --full-time'
