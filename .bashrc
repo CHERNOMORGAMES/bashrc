@@ -10,13 +10,15 @@ alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
 execsudo()
 {
 	if [[ "$1" = "-"* ]]; then
-	sudo "$@"
+		sudo "$@"
 	elif [ "$(type -t $1)" = "function" ]; then
-	local ARGS="$@"; sudo bash -c "$(declare -f $1); $ARGS"
+		local ARGS="$@"
+		sudo bash -c "$(declare -f $1); $ARGS"
 	elif [ "$1" = "command" ] || [ "$1" = "builtin" ]; then
-	shift; sudo bash -i <<<"$@"
+		shift
+		sudo bash -i <<<"$@"
 	else
-	sudo bash -i <<<"$@"
+		sudo bash -i <<<"$@"
 	fi
 }
 alias sudo="execsudo "
@@ -61,7 +63,7 @@ alias erz='rmls'
 alias eraze='erz'
 alias mv='command mv -v'
 #gnome only
-alias del='gio trash "$@"'
+alias del='command gio trash "$@"'
 alias delete='del'
 #
 
@@ -128,8 +130,7 @@ srch()
 		DPT=1
 	fi
 	local RPL
-	until [[ $RPL =~ ^[Nn]$ ]]
-	do
+	until [[ $RPL =~ ^[Nn]$ ]]; do
 		builtin echo Level "$DPT"
 		command find -mindepth "$DPT" -maxdepth "$DPT" -iname "$1"
 		builtin read -rsp "Go deeper?(y/n) " -n 1 RPL
