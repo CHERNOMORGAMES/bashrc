@@ -8,7 +8,7 @@ Experienced users might appreciate my _sudo_ and _search_ functions and maybe so
 * alias ls - cool looking, time and type based
 * all kinds of cd, cdls, rm, mkdir, e.t.c.
 * alias delete - move to trash (or restore) from terminal (for gnome only)
-* __alias search__ - filename[str], startdepth[int]: solving slow find problem by prompting each depth level, really proud of it!
+* __alias search__ - filename[str](use '' for wildcards), startdepth[int]: solving slow find problem by prompting each depth level, really proud of it!
 * alias check - lookup files for text insertions and show changetime based list
 * alias match - lookup files for text insertions and show each insertion with stringnumber
-* other stuff...
+* other stuff - kinda constantly improving my collection...
