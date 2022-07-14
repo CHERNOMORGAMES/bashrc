@@ -1,8 +1,7 @@
-#Bash alias collection by CHERNOMOR
-#(tested on GNU bash, version 5.1.0(1)-release (x86_64-redhat-linux-gnu) and version 5.1.16(1)-release (x86_64-pc-linux-gnu))
+#Bash alias collection by CHERNOMOR (tested GNU bash, version 5.1.0(1)-release (x86_64-redhat-linux-gnu))
 #Append this to the end of ~/.bashrc or ~/.bash_aliases file in your $HOME directory
-#Or to the end of /etc/bash.bashrc file to make it global - all users except root
-#Or to the end of /root/.bashrc to make it work for root user (after 'sudo -i')
+#Or to the end of /etc/bash.bashrc file to make it global
+#Or to the end of /root/.bashrc to make it work after 'sudo -i'
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
@@ -22,6 +21,7 @@ execsudo()
 }
 alias sudo="execsudo "
 
+alias here='builtin pwd'
 alias ls='ls -AtF --group-directories-first --color="always"'
 alias lsf='ls -h --full-time'
 alias list='command ls'
@@ -47,6 +47,8 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+alias cp='command cp -v'
+alias copy='command rsync -ah --info=progress2'
 rmls()
 {
 	command rm -rIv "$@"
@@ -57,6 +59,11 @@ rmls()
 }
 alias erz='rmls'
 alias eraze='erz'
+alias mv='command mv -v'
+#gnome only
+alias del='gio trash "$@"'
+alias delete='del'
+#
 
 mkls()
 {
@@ -81,10 +88,6 @@ alias create='command cat>'
 alias cr='create'
 alias edit='command nano'
 alias reader='command vi'
-
-alias cp='command cp -v'
-alias copy='command rsync -ah --info=progress2'
-alias mv='command mv -v'
 
 alias path='builtin echo -e ${PATH//:/\\n}'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
