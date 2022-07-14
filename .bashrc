@@ -41,12 +41,12 @@ cdls()
 alias cd='cdls'
 alias cld='command clear; cd'
 alias home='cld $HOME'
+alias back='cd -'
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-alias back='cd -'
 
 rmls()
 {
@@ -56,8 +56,8 @@ rmls()
 		ls
 	fi
 }
-alias del='rmls'
-alias delete='del'
+alias erz='rmls'
+alias eraze='erz'
 
 mkls()
 {
@@ -83,9 +83,9 @@ alias cr='create'
 alias edit='command nano'
 alias reader='command vi'
 
-alias cp='command cp -iv'
+alias cp='command cp -v'
 alias copy='command rsync -ah --info=progress2'
-alias mv='command mv -iv'
+alias mv='command mv -v'
 
 alias path='builtin echo -e ${PATH//:/\\n}'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
