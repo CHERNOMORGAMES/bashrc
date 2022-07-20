@@ -5,7 +5,10 @@
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
+builtin echo -e '                        \033[1;36m--- Aliases operational ---\033[0m'
+#for debug
 alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
+#
 
 execsudo()
 {
@@ -21,10 +24,16 @@ execsudo()
 		sudo bash -i <<<"$@"
 	fi
 }
-alias sudo="execsudo "
+alias sudo='execsudo '
+#backup for default sudo - it also wont use aliases if /root/.bashrc wasn't modified
+alias please='command sudo'
+#
 
 alias here='builtin pwd'
 alias ls='ls -AtF --group-directories-first --color="always"'
+#I want pwd and ls right from start
+here; ls
+#
 alias lsf='ls -h --full-time'
 alias list='command ls'
 
@@ -64,9 +73,42 @@ alias erz='rmls'
 alias eraze='erz'
 alias mv='command mv -v'
 #gnome only
-alias del='command gio trash "$@"'
+safedel()
+{
+	command realpath "$1"
+	command gio trash "$@"
+	builtin echo deleted
+}
+alias del='safedel'
 alias delete='del'
 #
+
+verbdd()
+{
+	local IF="$1"; local OF="$2"
+	IF="${IF:3}"; OF="${OF:3}"
+	shift; shift
+	builtin echo Please, double check dd parameters...
+	local CHK
+	builtin read -p "Input File = ${IF} ?(y/n) " CHK
+	if [[ ! "$CHK" =~ ^[Yy]$ ]]; then
+		builtin echo dd canceled; return
+	fi
+	builtin read -p "Output File = ${OF} ?(y/n) " CHK
+	if [[ ! "$CHK" =~ ^[Yy]$ ]]; then
+		builtin echo dd canceled; return
+	fi
+	builtin echo !!!Warning!!!
+	builtin echo Overwriting this file: "${OF}"
+	builtin read -p "Are you sure?(y/n) " CHK
+	if [[ "$CHK" =~ ^[Yy]$ ]]; then
+		command dd if="$IF" of="$OF" status=progress "$@"
+		builtin echo dd finished; return
+	fi
+	builtin echo dd canceled; return
+	return
+}
+alias dd='verbdd'
 
 mkls()
 {
@@ -87,7 +129,13 @@ mkcd()
 }
 
 alias empty='command touch'
-alias create='command cat>'
+createfile()
+{
+	builtin echo Enter text, press Ctrl+D to save...
+	command cat > "$@"
+	command realpath "$1"
+}
+alias create='createfile'
 alias cr='create'
 alias edit='command nano'
 alias reader='command vi'
