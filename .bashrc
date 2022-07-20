@@ -105,7 +105,7 @@ verbdd()
 		command dd if="$IF" of="$OF" status=progress "$@"
 		builtin echo dd finished; return
 	fi
-	builtin echo dd canceled; return
+	builtin echo dd canceled
 	return
 }
 alias dd='verbdd'
