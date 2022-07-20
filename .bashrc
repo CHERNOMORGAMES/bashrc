@@ -36,6 +36,7 @@ cdls()
 	builtin cd "$@"
 	local RES=$?
 	if [ "$RES" -eq 0 ]; then
+		builtin pwd
 		ls
 	fi
 }
@@ -122,6 +123,8 @@ alias ipublic='command curl ipinfo.io/ip'
 
 alias phplocal='command php -S 127.0.0.1:8000'
 alias phplocall='command php -S 0.0.0.0:8000'
+alias pconsole='command php -a'
+alias nconsole='node .editor'
 
 srch()
 {
