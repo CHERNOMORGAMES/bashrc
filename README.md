@@ -11,4 +11,5 @@ Experienced users might appreciate my _sudo_ and _search_ functions and maybe so
 * __alias search__ - filename[str](use '*' for wildcards), startdepth[int]: solving slow find problem by prompting each depth level, really proud of it!
 * alias check - lookup files for text insertions and show changetime based files list
 * alias match - lookup files for text insertions and show each insertion with stringnumber
+* alias cd - makes cd + ls + pwd, using cool ls and showing current path - never saw it in other repos
 * other stuff - kinda constantly improving my collection...
