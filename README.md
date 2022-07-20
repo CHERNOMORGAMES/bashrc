@@ -12,4 +12,7 @@ Experienced users might appreciate my _sudo_ and _search_ functions and maybe so
 * alias check - lookup files for text insertions and show changetime based files list
 * alias match - lookup files for text insertions and show each insertion with string number
 * __alias cd__ - makes cd + ls + pwd, using cool ls and showing current path - never saw it in other repos all at once
+
+
+
 * other stuff - kinda constantly improving my collection...
