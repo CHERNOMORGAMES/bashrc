@@ -1,7 +1,7 @@
 # ~/.bashrc
 My Bash aliases and functions collection, making Bash in terminal emulator much more friendly and convenient.  
 New linux users will find here almost all bash commands they might require, without need for googling them.  
-Remember to use `man <your command>` and `<your command> --help` - sometimes they save the day.  
+Remember to use `man <your command>` and `<your command> --help` sometimes they save the day.  
 Experienced users might appreciate my _sudo_ and _search_ functions and maybe some other things.  
 ## For now, cool stuff is:
 * __alias sudo__ - combined from [here](https://stackoverflow.com/a/72961859/14167912) and improved to invoke almost anything (only alias _now_ aint working)
