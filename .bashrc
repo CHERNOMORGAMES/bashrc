@@ -145,7 +145,7 @@ mkcd()
 }
 alias md='mkcd'
 
-alias empty='command touch'
+alias new='command touch'
 
 createfile()
 {
