@@ -84,8 +84,8 @@ rmls()
 	fi
 }
 alias erz='rmls'
-
 alias eraze='erz'
+
 #gnome only
 safedel()
 {
@@ -94,7 +94,6 @@ safedel()
 	builtin echo deleted
 }
 alias del='safedel'
-
 alias delete='del'
 ##
 
@@ -153,8 +152,8 @@ createfile()
 	command realpath "$1"
 }
 alias create='createfile'
-
 alias cr='create'
+
 alias edit='command nano'
 alias reader='command vi'
 ##
