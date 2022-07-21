@@ -161,6 +161,7 @@ alias reader='command vi'
 ##
 
 # INFO
+alias vars='builtin set'
 alias path='builtin echo -e ${PATH//:/\\n}'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
 
