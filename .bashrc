@@ -1,15 +1,17 @@
-#Bash alias collection by CHERNOMOR (tested GNU bash, version 5.1.0(1)-release (x86_64-redhat-linux-gnu))
+#Bash alias collection by CHERNOMOR (tested GNU bash, version 5.1.16(1) - Pop!_OS)
 #Append this to the end of ~/.bashrc or ~/.bash_aliases file in your $HOME directory
 #Or to the end of /etc/bash.bashrc file to make it global
 #Or to the end of /root/.bashrc to make it work after 'sudo -i'
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
+#BEGIN
 builtin echo -e '                        \033[1;36m--- Aliases operational ---\033[0m'
 #for debug
 alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
-#
+##
 
+# SUDO
 execsudo()
 {
 	if [[ "$1" = "-"* ]]; then
@@ -25,21 +27,26 @@ execsudo()
 	fi
 }
 alias sudo='execsudo '
+
 #backup for default sudo - it also wont use aliases if /root/.bashrc wasn't modified
 alias please='command sudo'
-#
+##
 
+# LS
 alias here='builtin pwd'
 alias ls='ls -AtF --group-directories-first --color="always"'
-#I want pwd and ls right from start
-here; ls
-#
 alias lsf='ls -h --full-time'
 alias list='command ls'
+#I want pwd and ls right from start
+here; ls
+##
 
+# TERMINAL OUTPUT
 alias h='builtin history'
 alias cl='command clear'
+##
 
+# CD
 cdls()
 {
 	builtin cd "$@"
@@ -50,6 +57,7 @@ cdls()
 	fi
 }
 alias cd='cdls'
+
 alias cld='command clear; cd'
 alias home='cld $HOME'
 alias back='cd -'
@@ -58,9 +66,15 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+##
 
+# COPY
 alias cp='command cp -v'
 alias copy='command rsync -ah --info=progress2'
+alias mv='command mv -v'
+##
+
+# DELETION
 rmls()
 {
 	command rm -rIv "$@"
@@ -70,8 +84,8 @@ rmls()
 	fi
 }
 alias erz='rmls'
+
 alias eraze='erz'
-alias mv='command mv -v'
 #gnome only
 safedel()
 {
@@ -80,9 +94,11 @@ safedel()
 	builtin echo deleted
 }
 alias del='safedel'
-alias delete='del'
-#
 
+alias delete='del'
+##
+
+# FILE OR FOLDER CREATION
 verbdd()
 {
 	local IF="$1"; local OF="$2"
@@ -119,6 +135,7 @@ mkls()
 	fi
 }
 alias mk='mkls'
+
 mkcd()
 {
 	command mkdir -v "$@"
@@ -136,43 +153,21 @@ createfile()
 	command realpath "$1"
 }
 alias create='createfile'
+
 alias cr='create'
 alias edit='command nano'
 alias reader='command vi'
+##
 
+# INFO
 alias path='builtin echo -e ${PATH//:/\\n}'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
-alias open='command xdg-open'
-alias calc='command bc -l'
 show()
 {
 	builtin type -a "$@"
 	command whereis "$@"
 }
 alias showme='show'
-
-alias mpass='openssl rand -base64 15'
-alias mpass16='openssl rand -base64 12'
-alias mpass20='mpass'
-alias mpass128='openssl rand -base64 18'
-alias mpass24='mpass128'
-alias mpass256='openssl rand -base64 33'
-alias mpass44='mpass256'
-
-alias ram='command free -hlt'
-alias cpu='command lscpu'
-alias disk='command df -hT --total --no-sync'
-alias dvcs='command lsblk -p'
-alias devices='dvcs'
-
-alias ports='command netstat -tulap'
-alias iports='command netstat -tulanp'
-alias ipublic='command curl ipinfo.io/ip'
-
-alias phplocal='command php -S 127.0.0.1:8000'
-alias phplocall='command php -S 0.0.0.0:8000'
-alias pconsole='command php -a'
-alias nconsole='node .editor'
 
 srch()
 {
@@ -190,12 +185,49 @@ srch()
 	echo
 }
 alias search='srch'
+
 chck()
 {
 	command grep -ilr "$@" | command xargs ls -t --full-time
 }
 alias check='chck'
+
 alias match='command grep -inor --color="always"'
+##
+
+# UTILITY
+alias mpass='openssl rand -base64 15'
+alias mpass16='openssl rand -base64 12'
+alias mpass20='mpass'
+alias mpass128='openssl rand -base64 18'
+alias mpass24='mpass128'
+alias mpass256='openssl rand -base64 33'
+alias mpass44='mpass256'
+alias open='command xdg-open'
+alias calc='command bc -l'
+##
+
+# SYSTEM INFO
+alias ram='command free -hlt'
+alias cpu='command lscpu'
+alias space='command df -hT --total --no-sync'
+alias dvcs='command lsblk -p'
+alias device='dvcs'
+alias disk='command fdisk -l'
+##
+
+# NETWORK INFO
+alias ports='command netstat -tulap'
+alias iports='command netstat -tulanp'
+alias ipublic='command curl ipinfo.io/ip'
+##
+
+# NETWORK UTILITY
+alias phplocal='command php -S 127.0.0.1:8000'
+alias phplocall='command php -S 0.0.0.0:8000'
+alias pconsole='command php -a'
+alias nconsole='node .editor'
+##
 
 #PHP virus code (Hector shell) search (need more testing)
 alias phps1='grep -ril --include=*.php -e "'base'.(128/2).'_de'.'code'" -e "(128/2)" | xargs ls -t --full-time'
