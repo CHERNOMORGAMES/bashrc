@@ -5,7 +5,8 @@
 #Alt + . -> previous command hotkey
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
-#BEGIN
+
+# BEGIN
 builtin echo -e '                        \033[1;36m--- Aliases operational ---\033[0m'
 #for debug
 alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
@@ -85,7 +86,6 @@ rmls()
 }
 alias erz='rmls'
 alias eraze='erz'
-
 #gnome only
 safedel()
 {
@@ -97,7 +97,7 @@ alias del='safedel'
 alias delete='del'
 ##
 
-# FILE OR FOLDER CREATION
+# CREATION
 verbdd()
 {
 	local IF="$1"; local OF="$2"
@@ -145,6 +145,7 @@ mkcd()
 }
 
 alias empty='command touch'
+
 createfile()
 {
 	builtin echo Enter text, press Ctrl+D to save...
@@ -154,13 +155,14 @@ createfile()
 alias create='createfile'
 alias cr='create'
 
-alias edit='command nano'
+alias editor='command nano'
 alias reader='command vi'
 ##
 
 # INFO
 alias path='builtin echo -e ${PATH//:/\\n}'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
+
 show()
 {
 	builtin type -a "$@"
