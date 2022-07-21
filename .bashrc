@@ -156,7 +156,7 @@ createfile()
 alias create='createfile'
 alias cr='create'
 
-alias editor='command nano'
+#alias editor='command nano'
 alias reader='command vi'
 ##
 
