@@ -156,8 +156,9 @@ createfile()
 alias create='createfile'
 alias cr='create'
 
-#alias editor='command nano'
-alias reader='command vi'
+#alias editor='command nano' #I have it default in Pop!_OS
+alias view='command vi'
+alias reader='command less'
 ##
 
 # INFO
