@@ -143,6 +143,7 @@ mkcd()
 		cd "${@: -1}"
 	fi
 }
+alias md='mkcd'
 
 alias empty='command touch'
 
