@@ -59,8 +59,8 @@ cdls()
 }
 alias cd='cdls'
 
-alias cld='command clear; cd'
-alias home='cld $HOME'
+alias cdl='command clear; cd'
+alias home='cdl $HOME'
 alias back='cd -'
 alias cd..='cd ..'
 alias ..='cd ..'
@@ -70,7 +70,13 @@ alias .....='cd ../../../..'
 ##
 
 # COPY
-alias cp='command cp -v'
+cpls()
+{
+	local DEST="${@: -1}"
+	command cp -rv "$@"
+	echo; command pwd "$DEST"; ls "$DEST"; echo
+}
+alias cp='cpls'
 alias copy='command rsync -ah --info=progress2'
 alias mv='command mv -v'
 ##
