@@ -4,7 +4,7 @@ New linux users will find here almost all bash commands they might require, with
 Remember to use `man <your command>` and `<your command> --help` sometimes they save the day.  
 Experienced users might appreciate my _sudo_ and _search_ functions and maybe some other things.  
 ## For now, cool stuff is:
-* __alias sudo__ - combined from [here](https://stackoverflow.com/a/72961859/14167912) and improved to invoke almost anything (only alias _now_ aint working)
+* __alias please__ - combined from [here](https://stackoverflow.com/a/72961859/14167912) and improved to invoke almost anything (only alias _now_ aint working). This is a sudo for things(like functions) that has problems with default sudo. The default sudo is preserved.
 * alias ls - cool looking, time and type based
 * all kinds of cd, cdls, rm, mkdir, e.t.c.
 * alias delete - move to trash (or restore) from terminal (gnome only, as far as I'm aware)
