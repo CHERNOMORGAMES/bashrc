@@ -13,6 +13,9 @@ alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
 ##
 
 # SUDO
+#Default sudo - it cant use aliases unless /root/.bashrc was modified
+alias sudo='command sudo'
+#This one can use aliases and functions, but cant work with prompt, at least for now.
 execsudo()
 {
 	if [[ "$1" = "-"* ]]; then
@@ -28,9 +31,6 @@ execsudo()
 	fi
 }
 alias please='execsudo '
-
-#backup for default sudo - it also wont use aliases if /root/.bashrc wasn't modified
-alias sudo='command sudo'
 ##
 
 # LS
