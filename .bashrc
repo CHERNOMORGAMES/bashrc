@@ -27,10 +27,10 @@ execsudo()
 		sudo bash -i <<<"$@"
 	fi
 }
-alias sudo='execsudo '
+alias please='execsudo '
 
 #backup for default sudo - it also wont use aliases if /root/.bashrc wasn't modified
-alias please='command sudo'
+alias sudo='command sudo'
 ##
 
 # LS
