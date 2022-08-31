@@ -34,7 +34,7 @@ alias please='execsudo '
 ##
 
 # LS
-alias here='builtin pwd'
+alias here='builtin echo "current_dir: $PWD"'
 alias ls='ls -AtF --group-directories-first --color="always"'
 alias lsf='ls -h --full-time'
 alias list='command ls'
@@ -53,14 +53,13 @@ cdls()
 	builtin cd "$@"
 	local RES=$?
 	if [ "$RES" -eq 0 ]; then
-		builtin pwd
-		ls
+		here; ls
 	fi
 }
 alias cd='cdls'
 
 alias cdl='command clear; cd'
-alias home='cdl $HOME'
+alias home='cdl ~/'
 alias back='cd -'
 alias cd..='cd ..'
 alias ..='cd ..'
@@ -168,8 +167,9 @@ alias reader='command less'
 ##
 
 # INFO
-alias vars='builtin set'
 alias path='builtin echo -e ${PATH//:/\\n}'
+alias status='systemctl status'
+alias vars='builtin set'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
 
 show()
@@ -237,6 +237,46 @@ alias phplocal='command php -S 127.0.0.1:8000'
 alias phplocall='command php -S 0.0.0.0:8000'
 alias pconsole='command php -a'
 alias nconsole='node .editor'
+
+instl_cmpsr()
+{
+	command cd ~/
+	command php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	command php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	command php composer-setup.php
+	sudo mv composer.phar /usr/local/bin/composer
+	command php -r "unlink('composer-setup.php');"
+}
+alias install_composer='instl_cmpsr'
+
+##
+
+# INSTALL
+#deb repo
+install_func()
+{
+	command sudo apt update
+	command sudo apt install "$*" -y
+}
+alias setup='install_func'
+
+# install php8.1 - Pop_OS! problems.
+# setup php8.1; setup php8.1-xml; setup php8.1-curl;
+##
+
+# UNINSTALL
+#deb repo
+uninstall_func()
+{
+	command sudo apt purge "$*" -y --auto-remove
+	command sudo apt autoremove
+	command sudo apt clean
+}
+alias uninstall='uninstall_func'
+##
+
+# LARAVEL
+alias artisan='php artisan' #use from project root folder
 ##
 
 #PHP virus code (Hector shell) search (need more testing)
