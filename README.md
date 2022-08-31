@@ -13,8 +13,8 @@ Experienced users might appreciate my _sudo_ and _search_ functions and maybe so
 * alias match - lookup files for text insertions and show each insertion with string number
 * __alias cd__ - makes cd + pwd + ls, using cool ls and showing current path - never saw it in other repos all at once
 * __alias dd__ - verbose dd, can save you from mistaking `if=` and `of=` parametres - happened to me once, was not so funny :smile:
-* alias setup - perform installation sequence via apt.
-* alias uninstall - perform unstallation sequence via apt.
-* alias install_composer - install php composer globaly.
+* alias setup - perform package install sequence via apt.
+* alias uninstall - perform package uninstall sequence via apt.
+* alias install_composer - install php composer globally.
 
 * other stuff - kinda constantly improving my collection...
