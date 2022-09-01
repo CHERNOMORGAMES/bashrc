@@ -217,7 +217,11 @@ alias mpass24='mpass128'
 alias mpass256='openssl rand -base64 33'
 alias mpass44='mpass256'
 alias open='command xdg-open'
-alias calc='command bc -l'
+calculator()
+{
+	echo "scale=30; $@" | bc -l
+}
+alias calc='calculator'
 ##
 
 # SYSTEM INFO
