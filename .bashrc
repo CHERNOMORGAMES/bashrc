@@ -45,6 +45,8 @@ here; ls
 # TERMINAL OUTPUT
 alias h='builtin history'
 alias cl='command clear'
+alias pconsole='command php -a'
+alias nconsole='node .editor'
 ##
 
 # CD
@@ -76,6 +78,7 @@ cpls()
 	echo; command pwd "$DEST"; ls "$DEST"; echo
 }
 alias cp='cpls'
+
 alias copy='command rsync -ah --info=progress2'
 alias mv='command mv -v'
 ##
@@ -235,8 +238,16 @@ alias ipublic='command curl ipinfo.io/ip'
 # NETWORK UTILITY
 alias phplocal='command php -S 127.0.0.1:8000'
 alias phplocall='command php -S 0.0.0.0:8000'
-alias pconsole='command php -a'
-alias nconsole='node .editor'
+##
+
+# INSTALL
+#deb repo
+install_func()
+{
+	command sudo apt update
+	command sudo apt install "$*" -y
+}
+alias setup='install_func'
 
 instl_cmpsr()
 {
@@ -248,17 +259,6 @@ instl_cmpsr()
 	command php -r "unlink('composer-setup.php');"
 }
 alias install_composer='instl_cmpsr'
-
-##
-
-# INSTALL
-#deb repo
-install_func()
-{
-	command sudo apt update
-	command sudo apt install "$*" -y
-}
-alias setup='install_func'
 
 # install php8.1 - Pop_OS! problems.
 # setup php8.1; setup php8.1-xml; setup php8.1-curl;
@@ -276,7 +276,7 @@ alias uninstall='uninstall_func'
 ##
 
 # LARAVEL
-alias artisan='php artisan' #use from project root folder
+alias artisan='php artisan' #use from laravel-project root folder
 ##
 
 #PHP virus code (Hector shell) search (need more testing)
