@@ -240,6 +240,7 @@ alias ipublic='command curl ipinfo.io/ip'
 ##
 
 # NETWORK UTILITY
+alias ping='command ping -c 5'
 alias phplocal='command php -S 127.0.0.1:8000'
 alias phplocall='command php -S 0.0.0.0:8000'
 ##
