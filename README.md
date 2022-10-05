@@ -16,5 +16,7 @@ Experienced users might appreciate my _sudo_ and _search_ functions and maybe so
 * alias setup - perform package install sequence via apt.
 * alias uninstall - perform package uninstall sequence via apt.
 * alias install_composer - install php composer globally.
+* alias calc - there are bash calculation constraints, which are solved by this
+* alias ping - limited to 5 packets to make you not push ctrl+c each time.
 
 * other stuff - kinda constantly improving my collection...
