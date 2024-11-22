@@ -351,11 +351,12 @@ configure_alpha_security()
 	dpkg-reconfigure slapd
 	systemctl restart slapd; sleep 3
 
+	cd /opt/Automiq/Alpha.Security
 	sh /opt/Automiq/Alpha.Security/alpha.security.schema.export.sh
 	systemctl restart slapd; sleep 3
 
 	ldapadd -Y EXTERNAL -H ldapi:/// -f access.ldif
-	systemctl restart slapd; sleep 3
+	systemctl restart slapd; sleep 1
 }
 alias config_ass="please configure_alpha_security" # call this + enter admin password
 
