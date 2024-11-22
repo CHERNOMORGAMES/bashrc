@@ -11,7 +11,7 @@ Experienced users might appreciate my _sudo_ and _search_ functions and maybe so
 * __alias search__ - filename[str](use '*' for wildcards), startdepth[int]: solving slow find problem by prompting each depth level, really proud of it!
 * alias check - lookup files for text insertions and show changetime based files list
 * alias match - lookup files for text insertions and show each insertion with string number
-* __alias cd__ - makes cd + pwd + ls, using cool ls and showing current path - never saw it in other repos all at once
+* __alias cv__ - makes cd + pwd + ls, using cool ls and showing current path - never saw it in other repos all at once
 * __alias dd__ - verbose dd, can save you from mistaking `if=` and `of=` parametres - happened to me once, was not so funny :smile:
 * alias setup - perform package install sequence via apt.
 * alias uninstall - perform package uninstall sequence via apt.
