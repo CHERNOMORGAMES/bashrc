@@ -320,6 +320,11 @@ alias firewall=iptlist
 # ALPHA.SCADA ####################################################################################################
 install_alpha_security()
 {
+	local CHK
+	builtin read -p "Are you in directory with alpha.****.deb packages for Linux? (y/n)" CHK
+	if [[ ! "$CHK" =~ ^[Yy]$ ]]; then
+		builtin echo Change Directory, please...; return
+	fi
 	yes | dpkg -i alpha.security*
 	yes | apt install slapd ldap-utils
 	ufw allow ldap
@@ -332,7 +337,9 @@ alias inst_ass="please install_alpha_security" #call this
 
 configure_alpha_security()
 {
-	local IN="$1"; local P=$(slappasswd -s "$IN")
+	local IN
+	builtin read -p "Enter OpenLDAP admin password: " IN
+	local P=$(slappasswd -s "$IN")
 	builtin echo Generated password: "${P}"
 	
 	>| ldaprootpasswd.ldif
@@ -351,14 +358,15 @@ configure_alpha_security()
 	dpkg-reconfigure slapd
 	systemctl restart slapd; sleep 3
 
-	cd /opt/Automiq/Alpha.Security
-	sh /opt/Automiq/Alpha.Security/alpha.security.schema.export.sh
+	ldapadd -Y EXTERNAL -H ldapi:/// -f /opt/Automiq/Alpha.Security/alpha.security.ldif
+	#cd /opt/Automiq/Alpha.Security
+	#sh /opt/Automiq/Alpha.Security/alpha.security.schema.export.sh
 	systemctl restart slapd; sleep 3
 
 	ldapadd -Y EXTERNAL -H ldapi:/// -f access.ldif
 	systemctl restart slapd; sleep 1
 }
-alias config_ass="please configure_alpha_security" # call this + enter admin password
+alias config_ass="please configure_alpha_security" # call this
 
 alias purge_ass="systemctl stop alpha.security; dpkg --purge alpha.security; erz /opt/Automiq/Alpha.Security"
 alias purge_slapd="systemctl stop slapd; apt-get purge --autoremove slapd ldap-utils; erz /etc/ldap; erz /var/lib/ldap"
