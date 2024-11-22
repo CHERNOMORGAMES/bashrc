@@ -58,16 +58,16 @@ cdls()
 		here; ls
 	fi
 }
-alias cd='cdls'
+alias cv='cdls'
 
-alias cdl='command clear; cd'
+alias cdl='command clear; cv'
 alias home='cdl ~/'
-alias back='cd -'
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
+alias back='cv -'
+alias cd..='cv ..'
+alias ..='cv ..'
+alias ...='cv ../..'
+alias ....='cv ../../..'
+alias .....='cv ../../../..'
 ##
 
 # COPY ####################################################################################################
@@ -148,7 +148,7 @@ mkcd()
 	command mkdir -v "$@"
 	local RES=$?
 	if [ "$RES" -eq 0 ]; then
-		cd "${@: -1}"
+		cv "${@: -1}"
 	fi
 }
 alias md='mkcd'
