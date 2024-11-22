@@ -328,7 +328,7 @@ install_alpha_security()
 	systemctl start slapd
 	systemctl enable slapd
 }
-alias inst_ass="please install_alpha_security"
+alias inst_ass="please install_alpha_security" #call this
 
 configure_alpha_security()
 {
@@ -342,22 +342,23 @@ configure_alpha_security()
 	builtin echo "olcRootPW: "${P}"">>ldaprootpasswd.ldif
 
 	>| access.ldif
-	builtin echo "dn: olcDatabase={1}mdb,cn=config">>ldaprootpasswd.ldif
-	builtin echo "changetype: modify">>ldaprootpasswd.ldif
-	builtin echo "replace: olcAccess">>ldaprootpasswd.ldif
-	builtin echo "olcAccess: {0}to * by users write by * read">>ldaprootpasswd.ldif
+	builtin echo "dn: olcDatabase={1}mdb,cn=config">>access.ldif
+	builtin echo "changetype: modify">>access.ldif
+	builtin echo "replace: olcAccess">>access.ldif
+	builtin echo "olcAccess: {0}to * by users write by * read">>access.ldif
 
 	ldapadd -Y EXTERNAL -H ldapi:/// -f ldaprootpasswd.ldif
 	dpkg-reconfigure slapd
-	systemctl restart slapd
+	systemctl restart slapd; sleep 3
 
-	cd /opt/Automiq/Alpha.Security
-	sh ./alpha.security.schema.export.sh
-	systemctl restart slapd
+	sh /opt/Automiq/Alpha.Security/alpha.security.schema.export.sh
+	systemctl restart slapd; sleep 3
 
 	ldapadd -Y EXTERNAL -H ldapi:/// -f access.ldif
-	systemctl restart slapd
-
+	systemctl restart slapd; sleep 3
 }
-alias config_ass="please configure_alpha_security" #enter password after call, like: config_ass [pasasword]
+alias config_ass="please configure_alpha_security" # call this + enter admin password
+
+alias purge_ass="systemctl stop alpha.security; dpkg --purge alpha.security; erz /opt/Automiq/Alpha.Security"
+alias purge_slapd="systemctl stop slapd; apt-get purge --autoremove slapd ldap-utils; erz /etc/ldap; erz /var/lib/ldap"
 ##
