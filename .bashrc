@@ -359,8 +359,6 @@ configure_alpha_security()
 	systemctl restart slapd; sleep 3
 
 	ldapadd -Y EXTERNAL -H ldapi:/// -f /opt/Automiq/Alpha.Security/alpha.security.ldif
-	#cd /opt/Automiq/Alpha.Security
-	#sh /opt/Automiq/Alpha.Security/alpha.security.schema.export.sh
 	systemctl restart slapd; sleep 3
 
 	ldapadd -Y EXTERNAL -H ldapi:/// -f access.ldif
