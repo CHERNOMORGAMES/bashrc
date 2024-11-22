@@ -330,7 +330,7 @@ install_alpha_security()
 }
 alias inst_ass="please install_alpha_security"
 
-configure_alpha_security() #enter password after call, like: mk_ldap [pasasword]
+configure_alpha_security()
 {
 	local IN="$1"; local P=$(slappasswd -s "$IN")
 	builtin echo Generated password: "${P}"
@@ -359,5 +359,5 @@ configure_alpha_security() #enter password after call, like: mk_ldap [pasasword]
 	systemctl restart slapd
 
 }
-alias config_ass="please configure_alpha_security"
+alias config_ass="please configure_alpha_security" #enter password after call, like: config_ass [pasasword]
 ##
