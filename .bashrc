@@ -1,5 +1,5 @@
 #Bash alias collection by CHERNOMOR (tested GNU bash, version 5.1.16(1) - Pop!_OS)
-#Append this to the end of ~/.bashrc or ~/.bash_aliases file in your $HOME directory
+#Append this to the end of ~/.bashrc add ~/.bash_aliases file in your $HOME directory
 #Or to the end of /etc/bash.bashrc file to make it global
 #Or to the end of /root/.bashrc to make it work after 'sudo -i'
 #Alt + . -> previous command hotkey
@@ -288,6 +288,7 @@ uninstall_func()
 {
 	command sudo apt purge "$*" -y --auto-remove
 	command sudo apt autoremove
+	command sudo apt autoclean
 	command sudo apt clean
 }
 alias uninstall='uninstall_func'
@@ -314,4 +315,49 @@ alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
 alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias firewall=iptlist
-#
+##
+
+# ALPHA.SCADA ####################################################################################################
+install_alpha_security()
+{
+	yes | dpkg -i alpha.security*
+	yes | apt install slapd ldap-utils
+	ufw allow ldap
+	systemctl start Alpha.Security
+	systemctl enable Alpha.Security
+	systemctl start slapd
+	systemctl enable slapd
+}
+alias inst_ass="please install_alpha_security"
+
+configure_alpha_security() #enter password after call, like: mk_ldap [pasasword]
+{
+	local IN="$1"; local P=$(slappasswd -s "$IN")
+	builtin echo Generated password: "${P}"
+	
+	>| ldaprootpasswd.ldif
+	builtin echo "dn: olcDatabase={0}config,cn=config">>ldaprootpasswd.ldif
+	builtin echo "changetype: modify">>ldaprootpasswd.ldif
+	builtin echo "add: olcRootPW">>ldaprootpasswd.ldif
+	builtin echo "olcRootPW: "${P}"">>ldaprootpasswd.ldif
+
+	>| access.ldif
+	builtin echo "dn: olcDatabase={1}mdb,cn=config">>ldaprootpasswd.ldif
+	builtin echo "changetype: modify">>ldaprootpasswd.ldif
+	builtin echo "replace: olcAccess">>ldaprootpasswd.ldif
+	builtin echo "olcAccess: {0}to * by users write by * read">>ldaprootpasswd.ldif
+
+	ldapadd -Y EXTERNAL -H ldapi:/// -f ldaprootpasswd.ldif
+	dpkg-reconfigure slapd
+	systemctl restart slapd
+
+	cd /opt/Automiq/Alpha.Security
+	sh ./alpha.security.schema.export.sh
+	systemctl restart slapd
+
+	ldapadd -Y EXTERNAL -H ldapi:/// -f access.ldif
+	systemctl restart slapd
+
+}
+alias config_ass="please configure_alpha_security"
+##
