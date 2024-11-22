@@ -1,5 +1,5 @@
 #Bash alias collection by CHERNOMOR (tested GNU bash, version 5.1.16(1) - Pop!_OS)
-#Append this to the end of ~/.bashrc add ~/.bash_aliases file in your $HOME directory
+#Append this to the end of ~/.bashrc or add ~/.bash_aliases file in your $HOME directory
 #Or to the end of /etc/bash.bashrc file to make it global
 #Or to the end of /root/.bashrc to make it work after 'sudo -i'
 #Alt + . -> previous command hotkey
