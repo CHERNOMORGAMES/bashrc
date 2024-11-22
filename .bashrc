@@ -6,13 +6,13 @@
 #Logout specific user pkill -KILL -U user
 #prefix 'command' works like 'not an alias' - it also works a bit faster.
 
-# BEGIN
+# BEGIN ####################################################################################################
 builtin echo -e '                        \033[1;36m--- Aliases operational ---\033[0m'
 #for debug
 alias iam='builtin echo I am: "$0" - with "$#" arguments: "$@" - exitcode "$?"'
 ##
 
-# SUDO
+# SUDO ####################################################################################################
 #Default sudo - it cant use aliases unless /root/.bashrc was modified
 alias sudo='command sudo'
 #This one can use aliases and functions, but cant work with prompt, at least for now.
@@ -33,7 +33,7 @@ execsudo()
 alias please='execsudo '
 ##
 
-# LS
+# LS ####################################################################################################
 alias here='builtin echo "current_dir: $PWD"'
 alias ls='ls -AtF --group-directories-first --color="always"'
 alias lsf='ls -h --full-time'
@@ -42,14 +42,14 @@ alias list='command ls'
 here; ls
 ##
 
-# TERMINAL OUTPUT
+# TERMINAL OUTPUT ####################################################################################################
 alias h='builtin history'
 alias cl='command clear'
 alias pconsole='command php -a'
 alias nconsole='node .editor'
 ##
 
-# CD
+# CD ####################################################################################################
 cdls()
 {
 	builtin cd "$@"
@@ -70,7 +70,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 ##
 
-# COPY
+# COPY ####################################################################################################
 cpls()
 {
 	local DEST="${@: -1}"
@@ -83,7 +83,7 @@ alias copy='command rsync -ah --info=progress2'
 alias mv='command mv -v'
 ##
 
-# DELETION
+# DELETION ####################################################################################################
 rmls()
 {
 	command rm -rIv "$@"
@@ -105,7 +105,7 @@ alias del='safedel'
 alias delete='del'
 ##
 
-# CREATION
+# CREATION ####################################################################################################
 verbdd()
 {
 	local IF="$1"; local OF="$2"
@@ -169,9 +169,8 @@ alias view='command vi'
 alias reader='command less'
 ##
 
-# INFO
+# INFO ####################################################################################################
 alias path='builtin echo -e ${PATH//:/\\n}'
-alias status='systemctl status'
 alias vars='builtin set'
 alias now='command date "+%x %A daynumber=%j unixtime=%s" && date -R && date -u'
 
@@ -208,7 +207,7 @@ alias check='chck'
 alias match='command grep -inor --color="always"'
 ##
 
-# UTILITY
+# UTILITY ####################################################################################################
 alias mpass='openssl rand -base64 15'
 alias mpass16='openssl rand -base64 12'
 alias mpass20='mpass'
@@ -224,28 +223,42 @@ calculator()
 alias calc='calculator'
 ##
 
-# SYSTEM INFO
+# SYSTEM INFO ####################################################################################################
 alias ram='command free -hlt'
 alias cpu='command lscpu'
 alias space='command df -hT --total --no-sync'
 alias dvcs='command lsblk -p'
 alias device='dvcs'
 alias disk='command fdisk -l'
+alias checkpack='command dpkg-query -s'
+alias services='command systemctl list-units --type=service'
+alias servicef='command systemctl list-unit-files --type=service'
+alias timers='command systemctl list-timers -all'
+alias status='command systemctl status'
 ##
 
-# NETWORK INFO
+# SYSTEM UTILITY ####################################################################################################
+alias start='command systemctl start'
+alias stop='command systemctl stop'
+alias restart='command systemctl restart'
+
+##
+
+# NETWORK INFO ####################################################################################################
 alias ports='command netstat -tulap'
 alias iports='command netstat -tulanp'
 alias ipublic='command curl ipinfo.io/ip'
+alias netinfo='builtin echo;command route;builtin echo;command ip n;builtin echo;command ip -br a;builtin echo;command netstat -atuUw2fp;'
+alias nstat='command netstat -s'
 ##
 
-# NETWORK UTILITY
+# NETWORK UTILITY ####################################################################################################
 alias ping='command ping -c 5'
 alias phplocal='command php -S 127.0.0.1:8000'
 alias phplocall='command php -S 0.0.0.0:8000'
 ##
 
-# INSTALL
+# INSTALL ####################################################################################################
 #deb repo
 install_func()
 {
@@ -269,7 +282,7 @@ alias install_composer='instl_cmpsr'
 # setup php8.1; setup php8.1-xml; setup php8.1-curl;
 ##
 
-# UNINSTALL
+# UNINSTALL ####################################################################################################
 #deb repo
 uninstall_func()
 {
@@ -280,7 +293,7 @@ uninstall_func()
 alias uninstall='uninstall_func'
 ##
 
-# LARAVEL
+# LARAVEL ####################################################################################################
 alias artisan='php artisan' #use from laravel-project root folder
 ##
 
